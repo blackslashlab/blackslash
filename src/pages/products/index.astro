@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import ProductCard from '../../components/products/ProductCard.astro';
+import ProductFilter from '../../components/products/ProductFilter.astro';
+
+const products = await getCollection('products');
+
+// Get unique categories
+const categories = [...new Set(products.map(product => product.data.category))];
+
+// Get selected category from URL
+const url = new URL(Astro.request.url);
+const selectedCategory = url.searchParams.get('category');
+
+// Filter products by category
+const filteredProducts = selectedCategory
+  ? products.filter(product => product.data.category === selectedCategory)
+  : products;
+---
+
+<Layout
+  title="Products | /blackslash/"
+  description="Explore our range of high-accuracy measurement instruments and precision electronic products."
+>
+  <!-- Page Header -->
+  <section class="bg-primary-gray-50 py-16 md:py-24">
+    <div class="container-custom">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-px bg-primary-accent"></span>
+          <span class="text-primary-accent text-sm font-medium tracking-wider uppercase">Products</span>
+        </div>
+        <h1 class="heading-2 mb-4">
+          Measurement Instruments
+        </h1>
+        <p class="body-large">
+          High-accuracy instruments designed for demanding professional and industrial applications.
+          Browse our complete product catalogue.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="section-padding">
+    <div class="container-custom">
+      <!-- Filter -->
+      <div class="mb-8">
+        <ProductFilter categories={categories} selectedCategory={selectedCategory || undefined} />
+      </div>
+
+      <!-- Products Grid -->
+      {filteredProducts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProducts.map((product) => (
+            <ProductCard
+              slug={product.slug}
+              name={product.data.name}
+              category={product.data.category}
+              shortDescription={product.data.shortDescription}
+              image={product.data.image}
+              features={product.data.features}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <svg class="w-16 h-16 mx-auto text-primary-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+          <h3 class="text-xl font-semibold text-primary-gray-600 mb-2">No products found</h3>
+          <p class="text-primary-gray-500 mb-6">
+            {selectedCategory 
+              ? `No products found in the "${selectedCategory}" category.`
+              : 'No products available at this time.'
+            }
+          </p>
+          {selectedCategory && (
+            <a href="/products" class="btn-secondary">
+              View All Products
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import Badge from '../ui/Badge.astro';
+
+const products = await getCollection('products');
+const featuredProducts = products.filter(product => product.data.featured);
+---
+
+<section class="section-padding bg-primary-white">
+  <div class="container-custom">
+    <!-- Section Header -->
+    <div class="max-w-2xl mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="w-8 h-px bg-primary-accent"></span>
+        <span class="text-primary-accent text-sm font-medium tracking-wider uppercase">Our Products</span>
+      </div>
+      <h2 class="heading-2 mb-4">
+        Precision Measurement Instruments
+      </h2>
+      <p class="body-large">
+        High-accuracy instruments designed for demanding professional and industrial applications.
+      </p>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {featuredProducts.map((product) => (
+        <article class="card group">
+          <!-- Product Image -->
+          <div class="aspect-square bg-primary-gray-50 relative overflow-hidden">
+            <img
+              src={product.data.image}
+              alt={product.data.name}
+              class="w-full h-full object-contain p-8 group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+          </div>
+          
+          <!-- Product Info -->
+          <div class="p-6">
+            <Badge variant="gray" class="mb-3">
+              {product.data.category}
+            </Badge>
+            
+            <h3 class="text-xl font-semibold mb-2">
+              <a href={`/products/${product.slug}`} class="hover:text-primary-accent transition-colors">
+                {product.data.name}
+              </a>
+            </h3>
+            
+            <p class="text-primary-gray-600 text-sm mb-4 line-clamp-2">
+              {product.data.shortDescription}
+            </p>
+            
+            <!-- Key Feature -->
+            {product.data.features[0] && (
+              <div class="flex items-start gap-3 mb-6 p-3 bg-primary-gray-50 rounded-lg">
+                <svg class="w-5 h-5 text-primary-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <div>
+                  <p class="text-sm font-medium">{product.data.features[0].title}</p>
+                  <p class="text-xs text-primary-gray-500">{product.data.features[0].description}</p>
+                </div>
+              </div>
+            )}
+            
+            <a
+              href={`/products/${product.slug}`}
+              class="inline-flex items-center text-sm font-medium text-primary-accent hover:text-primary-accent-dark transition-colors group/link"
+            >
+              View Product
+              <svg class="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- View All CTA -->
+    <div class="mt-12 text-center">
+      <a href="/products" class="btn-secondary">
+        View All Products
+        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

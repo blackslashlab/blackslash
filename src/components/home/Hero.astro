@@ -1,0 +1,64 @@
+---
+---
+
+<section class="relative min-h-[85vh] flex items-center overflow-hidden bg-primary-black">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-30">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-black via-primary-gray-900 to-primary-black"></div>
+    <!-- Precision grid pattern -->
+    <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(230, 57, 70, 0.1)" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  </div>
+  
+  <!-- Decorative slash elements -->
+  <div class="absolute top-1/4 right-10 w-px h-32 bg-gradient-to-b from-transparent via-primary-accent/30 to-transparent transform rotate-12"></div>
+  <div class="absolute bottom-1/4 left-10 w-px h-24 bg-gradient-to-b from-transparent via-primary-accent/20 to-transparent transform -rotate-12"></div>
+  
+  <div class="container-custom relative z-10">
+    <div class="max-w-4xl">
+      <!-- Eyebrow -->
+      <div class="inline-flex items-center gap-2 mb-6 animate-fade-in">
+        <span class="w-8 h-px bg-primary-accent"></span>
+        <span class="text-primary-accent text-sm font-medium tracking-wider uppercase">Precision Instruments</span>
+      </div>
+      
+      <!-- Main Heading -->
+      <h1 class="heading-1 text-white mb-6 animate-slide-up text-balance">
+        <span class="text-primary-accent">/</span>blackslash<span class="text-primary-accent">/</span>
+      </h1>
+      
+      <!-- Slogan -->
+      <p class="text-2xl md:text-3xl text-primary-gray-300 font-light mb-8 animate-slide-up animate-delay-100">
+        The slash of innovation
+      </p>
+      
+      <!-- Description -->
+      <p class="text-lg md:text-xl text-primary-gray-400 max-w-2xl mb-10 animate-slide-up animate-delay-200">
+        Precision instruments engineered for accuracy, reliability and innovation. 
+        Developing high-accuracy measurement instruments for professional environments.
+      </p>
+      
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4 animate-slide-up animate-delay-300">
+        <a href="/products" class="btn-primary">
+          Explore Products
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+        <a href="/about" class="btn-secondary border-primary-gray-600 text-primary-gray-300 hover:bg-primary-gray-600 hover:text-white">
+          About /blackslash/
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom gradient fade -->
+  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary-white to-transparent"></div>
+</section>

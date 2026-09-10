@@ -1,0 +1,66 @@
+---
+import Badge from '../ui/Badge.astro';
+
+interface Props {
+  slug: string;
+  name: string;
+  category: string;
+  shortDescription: string;
+  image: string;
+  features: Array<{ title: string; description: string }>;
+}
+
+const { slug, name, category, shortDescription, image, features } = Astro.props;
+---
+
+<article class="card group">
+  <!-- Product Image -->
+  <div class="aspect-square bg-primary-gray-50 relative overflow-hidden">
+    <img
+      src={image}
+      alt={name}
+      class="w-full h-full object-contain p-8 group-hover:scale-105 transition-transform duration-300"
+      loading="lazy"
+    />
+  </div>
+  
+  <!-- Product Info -->
+  <div class="p-6">
+    <Badge variant="gray" class="mb-3">
+      {category}
+    </Badge>
+    
+    <h3 class="text-xl font-semibold mb-2">
+      <a href={`/products/${slug}`} class="hover:text-primary-accent transition-colors">
+        {name}
+      </a>
+    </h3>
+    
+    <p class="text-primary-gray-600 text-sm mb-4 line-clamp-2">
+      {shortDescription}
+    </p>
+    
+    <!-- Key Feature -->
+    {features[0] && (
+      <div class="flex items-start gap-3 mb-6 p-3 bg-primary-gray-50 rounded-lg">
+        <svg class="w-5 h-5 text-primary-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <div>
+          <p class="text-sm font-medium">{features[0].title}</p>
+          <p class="text-xs text-primary-gray-500">{features[0].description}</p>
+        </div>
+      </div>
+    )}
+    
+    <a
+      href={`/products/${slug}`}
+      class="inline-flex items-center text-sm font-medium text-primary-accent hover:text-primary-accent-dark transition-colors group/link"
+    >
+      View Product
+      <svg class="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+  </div>
+</article>

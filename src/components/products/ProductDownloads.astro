@@ -1,0 +1,86 @@
+---
+interface Download {
+  name: string;
+  type: string;
+  format: string;
+  fileSize?: string;
+  url: string;
+}
+
+interface Props {
+  downloads: Download[];
+}
+
+const { downloads } = Astro.props;
+
+const typeIcons: Record<string, string> = {
+  datasheet: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+  manual: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+  certificate: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z',
+  technical: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+  other: 'M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13',
+};
+
+const typeLabels: Record<string, string> = {
+  datasheet: 'Datasheet',
+  manual: 'User Manual',
+  certificate: 'Certificate',
+  technical: 'Technical Doc',
+  other: 'Document',
+};
+---
+
+<section class="section-padding bg-primary-white">
+  <div class="container-custom">
+    <div class="max-w-2xl mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="w-8 h-px bg-primary-accent"></span>
+        <span class="text-primary-accent text-sm font-medium tracking-wider uppercase">Downloads</span>
+      </div>
+      <h2 class="heading-3">
+        Documents & Resources
+      </h2>
+    </div>
+
+    <div class="max-w-3xl">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {downloads.map((download) => {
+          const iconPath = typeIcons[download.type] || typeIcons.other;
+          const label = typeLabels[download.type] || download.type;
+          
+          return (
+            <a
+              href={download.url}
+              class="flex items-center gap-4 p-4 bg-primary-gray-50 rounded-xl border border-primary-gray-100 hover:border-primary-accent/30 hover:bg-primary-accent/5 transition-all duration-200 group"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div class="flex-shrink-0 w-12 h-12 bg-white rounded-lg border border-primary-gray-200 flex items-center justify-center group-hover:border-primary-accent/30 transition-colors">
+                <svg class="w-6 h-6 text-primary-gray-500 group-hover:text-primary-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={iconPath} />
+                </svg>
+              </div>
+              
+              <div class="flex-1 min-w-0">
+                <p class="font-medium text-sm truncate">{download.name}</p>
+                <div class="flex items-center gap-2 text-xs text-primary-gray-500">
+                  <span class="uppercase font-medium">{download.format}</span>
+                  {download.fileSize && (
+                    <>
+                      <span>•</span>
+                      <span>{download.fileSize}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+              
+              <svg class="w-5 h-5 text-primary-gray-400 group-hover:text-primary-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>
